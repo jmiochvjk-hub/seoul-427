@@ -157,6 +157,17 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .decision-actions { display: grid; grid-template-columns: 1.25fr 1fr; gap: .65rem; }
 [hidden] { display: none !important; }
 
+.random-note {
+  margin: -.1rem 1rem 1rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.5;
+}
+.random-note span { color: var(--acid); margin-right: .35rem; }
+.random-note strong { color: var(--paper); }
+
 .button {
   min-height: 56px;
   border: 1px solid transparent;
@@ -250,7 +261,7 @@ body.has-overlay { overflow: hidden; }
   .pointer { top: 2rem; }
   .primary-action, .decision-actions { align-self: end; padding: 0; margin: 0 0 1rem; }
   .decision-actions { grid-template-columns: 1fr; }
-  .roulette-card::after { content: "NO REPEATS / LOCAL SAVE"; align-self: end; margin: 0 0 1rem; color: var(--muted); font-size: .6rem; letter-spacing: .14em; }
+  .random-note { align-self: end; margin: 0 0 1rem; }
   .progress-section { padding-top: 5.5rem; }
 }
 

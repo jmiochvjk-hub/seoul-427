@@ -30,6 +30,7 @@
     percentage: document.querySelector("#percentage"),
     progressBar: document.querySelector("#progress-bar"),
     headerCount: document.querySelector("#header-count"),
+    poolSize: document.querySelector("#pool-size"),
     sheet: document.querySelector("#unlocked-sheet"),
     sheetBackdrop: document.querySelector("#sheet-backdrop"),
     openList: document.querySelector("#open-list"),
@@ -49,7 +50,6 @@
   let current = null;
   let spinning = false;
   let cycleTimer = null;
-  let spinTimer = null;
   let wheelTurns = 0;
   let toastTimer = null;
   let lastFocus = null;
@@ -76,11 +76,18 @@
     return buffer[0] % length;
   }
 
-  function available(excludeId = null) {
+  function secureShuffle(items) {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = secureIndex(index + 1);
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+  }
+
+  function available() {
     const unlocked = new Set(unlockedIds);
-    const pool = dongs.filter((dong) => !unlocked.has(dong.id) && dong.id !== excludeId);
-    if (!pool.length && excludeId && !unlocked.has(excludeId)) return [byId.get(excludeId)];
-    return pool;
+    return dongs.filter((dong) => !unlocked.has(dong.id));
   }
 
   function setPlace(dong, kicker = "今日目的地") {
@@ -102,13 +109,19 @@
     if (unlockedIds.length === TOTAL) elements.next.hidden = true;
   }
 
-  function startSpin(excludeId = null) {
+  function startSpin() {
     if (spinning) return;
-    const pool = available(excludeId);
+    const pool = available();
     if (!pool.length) {
       setReady();
       return;
     }
+
+    const shuffledPool = secureShuffle(pool);
+    const selected = shuffledPool[0];
+    const previewCount = Math.min(13, Math.max(0, shuffledPool.length - 1));
+    const sequence = [...shuffledPool.slice(1, previewCount + 1), selected];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     spinning = true;
     current = null;
@@ -118,18 +131,16 @@
     elements.spin.disabled = true;
     elements.status.textContent = "DRAWING";
     elements.status.className = "status-pill is-live";
-    elements.kicker.textContent = "正在穿过首尔";
+    elements.kicker.textContent = `正在洗牌 · ${pool.length} 个候选`;
     elements.card.classList.remove("is-spinning");
     void elements.card.offsetWidth;
     elements.card.classList.add("is-spinning");
-    wheelTurns += 1420 + secureIndex(280);
+    wheelTurns += 1440 + secureIndex(720);
     elements.wheel.style.transform = `rotate(${wheelTurns}deg)`;
 
-    cycleTimer = window.setInterval(() => setPlace(pool[secureIndex(pool.length)], "正在穿过首尔"), 72);
-    spinTimer = window.setTimeout(() => {
-      window.clearInterval(cycleTimer);
-      current = pool[secureIndex(pool.length)];
-      setPlace(current);
+    function finishSpin() {
+      current = selected;
+      setPlace(current, `今日目的地 · ${pool.length} 选 1`);
       elements.card.classList.remove("is-spinning");
       elements.status.textContent = "SELECTED";
       elements.status.className = "status-pill is-live";
@@ -138,7 +149,29 @@
       elements.spin.disabled = false;
       spinning = false;
       elements.confirm.focus({ preventScroll: true });
-    }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 120 : 1600);
+    }
+
+    if (reducedMotion) {
+      cycleTimer = window.setTimeout(finishSpin, 120);
+      return;
+    }
+
+    let step = 0;
+    function revealNext() {
+      const isFinal = step === sequence.length - 1;
+      if (isFinal) {
+        finishSpin();
+        return;
+      }
+
+      setPlace(sequence[step], `洗牌中 · ${step + 1}/${sequence.length}`);
+      const progress = step / Math.max(1, sequence.length - 1);
+      const delay = 55 + Math.round(progress * progress * 210);
+      step += 1;
+      cycleTimer = window.setTimeout(revealNext, delay);
+    }
+
+    revealNext();
   }
 
   function confirmSelection() {
@@ -159,9 +192,8 @@
   }
 
   function reroll() {
-    const previousId = current?.id || null;
     current = null;
-    startSpin(previousId);
+    startSpin();
   }
 
   function renderProgress() {
@@ -172,6 +204,7 @@
     elements.remainingCount.textContent = String(TOTAL - count);
     elements.percentage.textContent = percentage;
     elements.headerCount.textContent = String(count);
+    elements.poolSize.textContent = String(TOTAL - count);
     elements.progressBar.style.width = `${percent}%`;
     elements.sheetCount.textContent = `${count} / ${TOTAL}`;
     elements.sheetPercentage.textContent = `${percentage} COMPLETE`;
