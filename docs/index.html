@@ -4,17 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ff4d21" />
-    <meta name="description" content="随机抽取首尔 467 个法定洞，记录每一次放学后的城市探索。" />
-    <title>SEOUL 467 — 解锁首尔</title>
+    <meta name="description" content="随机抽取首尔 427 个行政洞，记录每一次放学后的城市探索。" />
+    <title>SEOUL 427 — 解锁首尔</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101010'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23ff4d21' stroke-width='7'/%3E%3Cpath d='M32 5l6 12H26z' fill='%23f3efdf'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23f3efdf'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="page-shell">
       <header class="topbar">
-        <a class="brand" href="./" aria-label="SEOUL 467 首页">
+        <a class="brand" href="./" aria-label="SEOUL 427 首页">
           <span>SEOUL</span>
-          <strong>467</strong>
+          <strong>427</strong>
         </a>
         <button class="icon-button" id="open-list" type="button" aria-label="查看已解锁列表">
           <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
         <section class="intro" aria-labelledby="page-title">
           <p class="eyebrow"><span></span> AFTER CLASS PROJECT</p>
           <h1 id="page-title">今天，首尔<br />带你去哪？</h1>
-          <p class="intro-copy">从全部未解锁的法定洞中随机抽取。确认后，就出发开拍。</p>
+          <p class="intro-copy">从全部未解锁的行政洞中随机抽取。确认后，就出发开拍。</p>
         </section>
 
         <section class="roulette-card" id="roulette-card" aria-labelledby="roulette-heading">
@@ -43,7 +43,7 @@
               <span class="wheel-index index-a">01</span>
               <span class="wheel-index index-b">17</span>
               <span class="wheel-index index-c">25</span>
-              <span class="wheel-index index-d">467</span>
+              <span class="wheel-index index-d">427</span>
             </div>
             <div class="result-display" aria-live="polite" aria-atomic="true">
               <span class="result-kicker" id="result-kicker">今日目的地</span>
@@ -71,7 +71,7 @@
             </button>
           </div>
 
-          <p class="random-note"><span aria-hidden="true">◎</span> 每次用安全随机数将剩余 <strong id="pool-size">467</strong> 个洞完整洗牌，再取第 1 个</p>
+          <p class="random-note"><span aria-hidden="true">◎</span> 每次用安全随机数将剩余 <strong id="pool-size">427</strong> 个洞完整洗牌，再取第 1 个</p>
         </section>
 
         <section class="progress-section" aria-labelledby="progress-heading">
@@ -87,11 +87,11 @@
           <div class="stats-grid">
             <div class="stat">
               <span>UNLOCKED</span>
-              <strong><b id="unlocked-count">0</b> / 467</strong>
+              <strong><b id="unlocked-count">0</b> / 427</strong>
             </div>
             <div class="stat">
               <span>REMAINING</span>
-              <strong id="remaining-count">467</strong>
+              <strong id="remaining-count">427</strong>
             </div>
             <div class="stat stat-accent">
               <span>COVERAGE</span>
@@ -102,7 +102,7 @@
       </main>
 
       <footer>
-        <p>25 区 · 467 法定洞 · 你的首尔长期企划</p>
+        <p>25 区 · 427 行政洞 · 你的首尔长期企划</p>
         <a href="https://www.seoul.go.kr/seoul/autonomy_sub.do" target="_blank" rel="noreferrer">数据来源：首尔特别市 ↗</a>
       </footer>
     </div>
@@ -118,7 +118,7 @@
         <button class="close-button" id="close-list" type="button" aria-label="关闭列表">×</button>
       </div>
       <div class="sheet-summary">
-        <strong id="sheet-count">0 / 467</strong>
+        <strong id="sheet-count">0 / 427</strong>
         <span id="sheet-percentage">0.00% COMPLETE</span>
       </div>
       <div class="unlocked-list" id="unlocked-list"></div>

@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const TOTAL = 467;
-  const STORAGE_KEY = "seoul467.unlocked.v1";
+  const TOTAL = 427;
+  const STORAGE_KEY = "seoul427.unlocked.v1";
   const dongs = Array.isArray(window.SEOUL_DONGS) ? window.SEOUL_DONGS : [];
   const byId = new Map(dongs.map((dong) => [dong.id, dong]));
 
@@ -93,16 +93,16 @@
   function setPlace(dong, kicker = "今日目的地") {
     elements.kicker.textContent = kicker;
     elements.name.textContent = dong.name;
-    elements.district.textContent = `${dong.district} · 법정동`;
+    elements.district.textContent = `${dong.district} · 행정동`;
   }
 
   function setReady() {
     current = null;
     elements.status.textContent = unlockedIds.length === TOTAL ? "COMPLETE" : "READY";
     elements.status.className = "status-pill";
-    elements.kicker.textContent = unlockedIds.length === TOTAL ? "467 / 467" : "今日目的地";
+    elements.kicker.textContent = unlockedIds.length === TOTAL ? "427 / 427" : "今日目的地";
     elements.name.textContent = unlockedIds.length === TOTAL ? "全部解锁" : "准备出发";
-    elements.district.textContent = unlockedIds.length === TOTAL ? "你已经走完首尔全部法定洞" : "转动城市，抽一个未解锁的洞";
+    elements.district.textContent = unlockedIds.length === TOTAL ? "你已经走完首尔全部行政洞" : "转动城市，抽一个未解锁的洞";
     elements.idleActions.hidden = unlockedIds.length === TOTAL;
     elements.decisionActions.hidden = true;
     elements.completeActions.hidden = unlockedIds.length !== TOTAL;
@@ -278,7 +278,7 @@
     renderProgress();
     closeSheet();
     setReady();
-    showToast("进度已清空，467 个洞全部回到随机池");
+    showToast("进度已清空，427 个洞全部回到随机池");
   }
 
   function showToast(message) {
